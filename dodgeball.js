@@ -1,6 +1,7 @@
 'use strict;'
 // const assert = require('assert');
 
+//array of data
 const arrOfPeople = [{
     id: 2,
     name: "Charles Young",
@@ -52,11 +53,12 @@ const arrOfPeople = [{
   },
 ]
 
-
+//declaration of array of dodgeball players and teams
 const listOfPlayers = [];
 const blueTeam = [];
 const redTeam = [];
 
+//constructor for a new player
 class Player{
   constructor(id, name, age, skillSet, placeBorn, team) {
       this.id = id;
@@ -66,11 +68,9 @@ class Player{
       this.placeBorn = placeBorn;
       this.team = null;
   }
-  enterTeam(team){
-    this.team = team;
-  }
 }
 
+//constructor for Dodgeball Players
 class DodgeballPlayer extends Player{
     constructor(canThrowBall, canDodgeBall, hasPaid, isHealthy, yearsExperience, id, name, age, skillSet, placeBorn, team) {
         super(id, name, age, skillSet, placeBorn);
@@ -81,104 +81,218 @@ class DodgeballPlayer extends Player{
         this.yearsExperience = yearsExperience;
         this.team = team;
     }
-}
+  }
 
-// class BlueTeam extends DodgeballPlayer{
-//     constructor(canThrowBall, canDodgeBall, hasPaid, isHealthy, yearsExperience, id, name, age, skillSet, placeBorn, team){
-//         super(canThrowBall, canDodgeBall, hasPaid, isHealthy, yearsExperience, id, name, age, skillSet, placeBorn);
-//     }
-// }
-
-// class RedTeam extends DodgeballPlayer{
-//     constructor(canThrowBall, canDodgeBall, hasPaid, isHealthy, yearsExperience, id, name, age, skillSet, placeBorn, team){
-//         super(canThrowBall, canDodgeBall, hasPaid, isHealthy, yearsExperience, id, name, age, skillSet, placeBorn);
-//     }
-
-// }
-
-// const signUpList = (element) => {
-// // your code here
-// }
-
-// const makePlayer = (id, element) => {
-// // your code here
-// }
-
-
+//Function that lists all people
 const listPeopleChoices = () => {
-    
-    const listElement = document.getElementById('people')
-    arrOfPeople.map(person => {
-        const li = document.createElement("li")
-        li.id = person.id;
-        const button = document.createElement("button")
-        button.innerHTML = "Make Player"
-        button.addEventListener('click', function() {makePlayer(person.id)} )
-        li.appendChild(button)
-        li.appendChild(document.createTextNode(person.name + " - " + person.skillSet))
-        listElement.append(li);
-    });
-    document.getElementById('listButton').style.display = 'none';
-}
-  
-  const makePlayer = (id) => {
-    console.log(`li ${id} was clicked!`);
-    arrOfPeople.map(person =>{
-      if (person.id === id){
-        const plr = new Player(`${person.id}`, `${person.name}`, `${person.age}`, `${person.skillSet}`, `${person.placeBorn}`, null)
-        listOfPlayers.push(plr);
-        console.log(listOfPlayers);
-        let element = document.getElementById(person.id);
-        element.style.display = 'none';
-      }
-    });
-    console.log(listOfPlayers[0].team);
-    const listElement = document.getElementById('players');
-    listElement.innerHTML = '';
-    listOfPlayers.map(player => {
-      console.log("player " + player);
-      if(!player.team){
-        console.log(player.team);
-        const li = document.createElement("li");
-        li.appendChild(document.createTextNode(player.name + " - " + player.skillSet));
-        li.id = "player" + player.id;
-        const button1 = document.createElement("button");
-        const button2 = document.createElement("button");
-        button1.innerHTML = "Add to Blue Team";
-        button2.innerHTML = "Add to Red Team";
-        button1.addEventListener('click', function() {addBlueTeamMem(player.id)});
-        button2.addEventListener('click', function() {addRedTeamMem(player.id)});
-        listElement.append(li);
-        li.appendChild(button1);
-        li.appendChild(button2);
-      }
-    });
-  }
-
-  const addBlueTeamMem = (id) => {
-    listOfPlayers.map(player =>{
-      if(player.id === id){
-        let element = document.getElementById("player" + player.id);
-        element.style.display = 'none';
-        let btm = new DodgeballPlayer(null, null, null, null, null, `${player.id}`, `${player.name}`, `${player.age}`, `${player.skillSet}`, `${player.placeBorn}`, 'blue');
-        blueTeam.push(btm);
-        console.log("blue team " + blueTeam);
-        player.team = "blue";
-      }
-    })
-    const listElement = document.getElementById('blue');
-    listElement.innerHTML = '';
-    blueTeam.map(blueMem => {
-      const li = document.createElement("li");
-      li.appendChild(document.createTextNode(blueMem.name + " - " + blueMem.skillSet));
-      li.id = "blueTeamMem" + blueMem.id;
+  const listElement = document.getElementById('people')
+  //maps through people array to create new possible players
+  arrOfPeople.map(person => {
+      const li = document.createElement("li")
+      li.id = person.id;
+      const button = document.createElement("button")
+      button.innerHTML = "Make Player"
+      button.addEventListener('click', function() {makePlayer(person.id)} )
+      li.appendChild(button)
+      li.appendChild(document.createTextNode(person.name + " - " + person.skillSet))
       listElement.append(li);
-    })
+  });
+  document.getElementById('listButton').style.display = 'none';
+}
 
-    
-    console.log(blueTeam);
-  }
+//function called when "make player" button is clicked
+const makePlayer = (id) => {
+  //maps through array of people to create new Players
+  arrOfPeople.map(person =>{
+    //if the id of the person in arrOfPeople matches the id of person clicked
+    if (person.id === id){
+      //create new player using player class
+      const plr = new Player(`${person.id}`, `${person.name}`, `${person.age}`, `${person.skillSet}`, `${person.placeBorn}`, null);
+      //push new player to listOfPlayers array
+      listOfPlayers.push(plr);
+      //grab list element and set display to none
+      let element = document.getElementById(person.id);
+      element.style.display = 'none';
+    }
+  });
 
-  const addRedTeamMem = (id) => {
-    console.log("added to red team");
-  }
+  const listElement = document.getElementById('players');
+  //clear list
+  listElement.innerHTML = '';
+  //maps through list of Players array
+  listOfPlayers.map(player => {
+    //if the player is NOT assigned to a team print in Dodgeball Players list
+    if(!player.team){
+      const li = document.createElement("li");
+      li.appendChild(document.createTextNode(player.name + " - " + player.skillSet));
+      //sets list item ID to "player#"
+      li.id = "player" + player.id;
+      const button1 = document.createElement("button");
+      const button2 = document.createElement("button");
+      button1.innerHTML = "Add to Blue Team";
+      button2.innerHTML = "Add to Red Team";
+      button1.addEventListener('click', function() {addBlueTeamMem(player.id)});
+      button2.addEventListener('click', function() {addRedTeamMem(player.id)});
+      listElement.append(li);
+      li.appendChild(button1);
+      li.appendChild(button2);
+    }
+  });
+}
+
+//function to add a blue team member when button is clicked
+const addBlueTeamMem = (id) => {
+  //maps through list of players array
+  listOfPlayers.map(player =>{
+    //if player id matches the id of player clicked
+    if(player.id === id){
+      //accesses element with unique id "player#"
+      let element = document.getElementById("player" + player.id);
+      //does not display item in Dodgeball player list
+      element.style.display = 'none';
+      //creates new Dodgeball Player using DodgeballPlayer class
+      let btm = new DodgeballPlayer(null, null, null, null, null, `${player.id}`, `${player.name}`, `${player.age}`, `${player.skillSet}`, `${player.placeBorn}`, 'blue');
+      //new blue team memeber pushed to array
+      blueTeam.push(btm);
+      //assigns player a team
+      player.team = "blue";
+    }
+  })
+  //access blue team list
+  const listElement = document.getElementById('blue');
+  //clears list
+  listElement.innerHTML = '';
+  //maps through blue team array to print in list
+  blueTeam.map(blueMem => {
+    const li = document.createElement("li");
+    //creates inputs for boolean inputs and years experience
+    const ctbCheckBox = document.createElement("input");
+    const cdbCheckBox = document.createElement("input");
+    const hpCheckBox = document.createElement("input");
+    const ihCheckBox = document.createElement("input");
+    const yeInput = document.createElement("input");
+    const linebreak = document.createElement("br");
+    //inputs to alter array data
+    ctbCheckBox.setAttribute("type", "checkbox");
+    if (blueMem.canThrowBall){ctbCheckBox.checked = true};
+    ctbCheckBox.addEventListener("change", function(){this.checked ? blueMem.canThrowBall = true : blueMem.canThrowBall = false});
+    cdbCheckBox.setAttribute("type", "checkbox");
+    if (blueMem.canDodgeBall){cdbCheckBox.checked = true};
+    cdbCheckBox.addEventListener("change", function(){this.checked ? blueMem.canDodgeBall = true : blueMem.canDodgeBall = false});
+    hpCheckBox.setAttribute("type", "checkbox");
+    if (blueMem.hasPaid){hpCheckBox.checked = true};
+    hpCheckBox.addEventListener("change", function(){this.checked ? blueMem.hasPaid = true : blueMem.hasPaid = false});
+    ihCheckBox.setAttribute("type", "checkbox");
+    if (blueMem.isHealthy){ihCheckBox.checked = true};
+    ihCheckBox.addEventListener("change", function(){this.checked ? blueMem.isHealthy = true : blueMem.isHealthy = false});
+    yeInput.setAttribute("type", "text");
+    if(blueMem.yearsExperience){yeInput.value = blueMem.yearsExperience}
+    yeInput.addEventListener("change", function(){blueMem.yearsExperience = this.value});
+    li.appendChild(document.createTextNode(blueMem.name + " - " + blueMem.skillSet));
+    li.appendChild(linebreak);
+    li.appendChild(document.createTextNode("  Can Throw: "));
+    li.appendChild(ctbCheckBox); 
+    li.appendChild(document.createTextNode("| Can Dodge: "));
+    li.appendChild(cdbCheckBox);
+    li.appendChild(document.createTextNode("| Has Paid: "));
+    li.appendChild(hpCheckBox);
+    li.appendChild(document.createTextNode("| Is Healthy: "));
+    li.appendChild(ihCheckBox);
+    li.appendChild(document.createTextNode("| Years Experience: "));
+    li.appendChild(yeInput);
+    li.className = "btm";
+    listElement.append(li);
+  })
+}
+//function to add a red team member when button is clicked
+const addRedTeamMem = (id) => {
+  //maps through list of players array
+  listOfPlayers.map(player =>{
+    //if player id matches the id of player clicked
+    if(player.id === id){
+      //accesses element with unique id "player#"
+      let element = document.getElementById("player" + player.id);
+      //does not display item in Dodgeball player list
+      element.style.display = 'none';
+      //creates new Dodgeball Player using DodgeballPlayer class
+      let rtm = new DodgeballPlayer(null, null, null, null, null, `${player.id}`, `${player.name}`, `${player.age}`, `${player.skillSet}`, `${player.placeBorn}`, 'blue');
+      //new red team memeber pushed to array
+      redTeam.push(rtm);
+      //assigns player a team
+      player.team = "red";
+    }
+  })
+  //access red team list
+  const listElement = document.getElementById('red');
+  //clears list
+  listElement.innerHTML = '';
+  //maps through red team array to print in list
+  redTeam.map(redMem => {
+    const li = document.createElement("li");
+    //creates inputs for boolean inputs and years experience
+    const ctbCheckBox = document.createElement("input");
+    const cdbCheckBox = document.createElement("input");
+    const hpCheckBox = document.createElement("input");
+    const ihCheckBox = document.createElement("input");
+    const yeInput = document.createElement("input");
+    const linebreak = document.createElement("br");
+    //inputs to alter array data
+    ctbCheckBox.setAttribute("type", "checkbox");
+    if (redMem.canThrowBall){ctbCheckBox.checked = true};
+    ctbCheckBox.addEventListener("change", function(){this.checked ? redMem.canThrowBall = true : redMem.canThrowBall = false});
+    cdbCheckBox.setAttribute("type", "checkbox");
+    if (redMem.canDodgeBall){cdbCheckBox.checked = true};
+    cdbCheckBox.addEventListener("change", function(){this.checked ? redMem.canDodgeBall = true : redMem.canDodgeBall = false});
+    hpCheckBox.setAttribute("type", "checkbox");
+    if (redMem.hasPaid){hpCheckBox.checked = true};
+    hpCheckBox.addEventListener("change", function(){this.checked ? redMem.hasPaid = true : redMem.hasPaid = false});
+    ihCheckBox.setAttribute("type", "checkbox");
+    if (redMem.isHealthy){ihCheckBox.checked = true};
+    ihCheckBox.addEventListener("change", function(){this.checked ? redMem.isHealthy = true : redMem.isHealthy = false});
+    yeInput.setAttribute("type", "text");
+    yeInput.addEventListener("change", function(){redMem.yearsExperience = this.value});
+    if(redMem.yearsExperience){yeInput.value = redMem.yearsExperience}
+    li.appendChild(document.createTextNode(redMem.name + " - " + redMem.skillSet));
+    li.appendChild(linebreak);
+    li.appendChild(document.createTextNode("  Can Throw: "));
+    li.appendChild(ctbCheckBox); 
+    li.appendChild(document.createTextNode("| Can Dodge: "));
+    li.appendChild(cdbCheckBox);
+    li.appendChild(document.createTextNode("| Has Paid: "));
+    li.appendChild(hpCheckBox);
+    li.appendChild(document.createTextNode("| Is Healthy: "));
+    li.appendChild(ihCheckBox);
+    li.appendChild(document.createTextNode("| Years Experience: "));
+    li.appendChild(yeInput);
+    li.className = "rtm";
+    listElement.append(li);
+  })
+}
+
+if (typeof describe === 'function') {
+  describe('list of players array', () => {
+      it('should add players to list of players array', () => {
+      makePlayer(2);
+      assert.equal(listOfPlayers.length, 1);
+      });
+  // describe('reverse test', () => {
+  //     it('should reverse the array', () => {
+  //     assert.deepEqual(reversed, [ 7, 6, 5, 4, 3, 2, 1 ]);
+  //     });
+  // });
+  // describe('without test', () => {
+  //     it('should remove specified items from the array', () => {
+  //     assert.deepEqual(without, [ 7, 6, 5, 4 ]);
+  //     });
+  // });
+  // describe('shuffle test', () => {
+  //     it('should shuffle the items in the array', () => {
+  //     assert.deepEqual(!shuffled, !a);
+  //     });
+  // });
+  // describe('indexOf test', () => {
+  //     it('should find the index of a specfic value', () => {
+  //     assert.deepEqual(indexOf, 3);
+  //     });
+  // });
+})};

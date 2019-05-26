@@ -1,0 +1,19 @@
+- Create a player constructor
+    - takes information from arrOfPeople
+- Create Dodgeball Player constructor
+    - Extends player array
+    - adds canThrowBall, canDodgeBall, hasPaid, isHealthy, yearsExperience
+- Create function to make a new player
+    - calls upon player constructor
+    - pushes information into listOfPlayers array
+    - prints players to browser under Dodgeball Players list
+- Create function to add new Blue Team Member
+    - calls upon DodgeballPlayer constructor
+        -create input possibilities for new attributes (possibly checkboxes)
+    - pushes to blueTeam array
+    - prints members to browser under Blue Team list
+- Create a function to make a new Red Team Member
+    - calls upon DodgeballPlayer constructor
+        -create input possibilities for new attributes (possibly checkboxes)
+    - pushes to redTeam array
+    - prints members to browser under Red Team list

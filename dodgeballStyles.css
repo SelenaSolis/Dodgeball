@@ -1,3 +1,17 @@
-#people{
-    
+*{
+    box-sizing:border-box;
 }
+
+.btm{
+    border: 1px solid black;
+    margin: 3px;
+    padding: 3px;
+}
+
+.rtm{
+    border: 1px solid black;
+    margin: 3px;
+    padding: 3px;
+}
+
+
