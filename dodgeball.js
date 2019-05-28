@@ -122,7 +122,8 @@ class DodgeballPlayer extends Player{
 const listPeopleChoices = () => {
   const listElement = document.getElementById('people');
   let playerIDArr = [];
-  //maps through people array to create new possible players
+  //maps through people array to create new possible players list
+  //if no current players, print all possible players
   if(listOfPlayers.length < 1){
     listElement.innerHTML = "";
     arrOfPeople.map(person => {
@@ -139,6 +140,7 @@ const listPeopleChoices = () => {
   else{
     listElement.innerHTML = "";
     listOfPlayers.map(player => {
+      //create array of player IDs
       for(x in player){
         if(x === "id"){
           playerIDArr.push(parseInt(player.id));
@@ -146,6 +148,8 @@ const listPeopleChoices = () => {
       }
     });
     arrOfPeople.map(person => {
+      //if person in arrOfPeople array has an ID that has already
+      //been added to the players list, do not print to browser
       if (!playerIDArr.includes(person.id)){
         const li = document.createElement("li")
         li.id = person.id;
@@ -158,7 +162,6 @@ const listPeopleChoices = () => {
       }
     });
   }
-  // document.getElementById('listButton').style.display = 'none';
 }
 
 //function called when "make player" button is clicked
@@ -200,6 +203,7 @@ const makePlayer = (id) => {
     }
   });
 }
+
 
 //function to add a blue team member when button is clicked
 const addBlueTeamMem = (id) => {
@@ -265,6 +269,7 @@ const addBlueTeamMem = (id) => {
     listElement.append(li);
   })
 }
+
 //function to add a red team member when button is clicked
 const addRedTeamMem = (id) => {
   //maps through list of players array
@@ -329,5 +334,3 @@ const addRedTeamMem = (id) => {
     listElement.append(li);
   })
 }
-
-
