@@ -14,4 +14,8 @@
     padding: 3px;
 }
 
+input[value], input[type=text]{
+    color: gray;
+}
+
 

@@ -9,20 +9,30 @@
 </head>
 <body>
   <div>
-      <h4>List Of People</h4>
+    <h4>ADD NEW PLAYER</h4>
+      First name: <input type="text" id="firstName" value="first"><br>
+      Last name: <input type="text" id="lastName" value="last"><br>
+      Birthdate: <input type="text" id="bday" value="mm/dd/yyyy"><br>
+      skill: <input type="text" id="skillSet" value="fencing"><br>
+      Birthplace: <input type="text" id="city" value="city"><br>
+                  <input type="text" id="state" value="state"><br>
+      <input type="submit" value="Submit" onclick="makePerson()">
+  </div>
+  <div>
+      <h4>LIST OF PEOPLE</h4>
       <ul id="people"></ul>
   </div>
   <button onclick="listPeopleChoices()" id = "listButton">List People</button>
   <div>
-      <h4>Dodge Ball Players</h4>
+      <h4>DODGEBALL PLAYERS</h4>
       <ul id="players"></ul>
   </div>
   <div>
-      <h4>Blue Team</h4>
+      <h4>BLUE TEAM</h4>
       <ul id="blue"></ul>
   </div>
   <div>
-      <h4>Red Team</h4>
+      <h4>RED TEAM</h4>
       <ul id="red"></ul>
   </div>
   <script src='./dodgeball.js'></script>

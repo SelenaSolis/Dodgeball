@@ -1,5 +1,4 @@
 'use strict;'
-// const assert = require('assert');
 
 //array of data
 const arrOfPeople = [{
@@ -53,10 +52,46 @@ const arrOfPeople = [{
   },
 ]
 
+
+
 //declaration of array of dodgeball players and teams
 const listOfPlayers = [];
 const blueTeam = [];
 const redTeam = [];
+
+
+const makePerson = () => {
+  var d = new Date();
+  let age;
+  let id = arrOfPeople[arrOfPeople.length-1].id + 1;
+  let name = document.getElementById("firstName").value + " " + document.getElementById("lastName").value;
+  let bday = document.getElementById("bday").value;
+  let skillSet = document.getElementById("skillSet").value;
+  let placeBorn = document.getElementById("city").value + ", " + document.getElementById("state").value;
+  let month = parseInt(bday.substr(0, 2));
+  let day = parseInt(bday.substr(3, 2));
+  let year = parseInt(bday.substr(6, 4));
+  let currMonth = d.getMonth() + 1;
+  let currYear = d.getFullYear();
+  let currDay = d.getDate();
+  if(currMonth > month){
+    age = currYear - year;
+  }
+  else if(currMonth < month){
+    age = (curryear - year) - 1;
+  }
+  else{
+    if(currDay >= day){
+      age = currYear - year;
+    }
+    else{
+      age = (currYear - year) - 1;
+    }
+  }
+  let plr = new Player(id, name, age, skillSet, placeBorn, null);
+  arrOfPeople.push(plr);
+  listPeopleChoices();
+}
 
 //constructor for a new player
 class Player{
@@ -72,22 +107,25 @@ class Player{
 
 //constructor for Dodgeball Players
 class DodgeballPlayer extends Player{
-    constructor(canThrowBall, canDodgeBall, hasPaid, isHealthy, yearsExperience, id, name, age, skillSet, placeBorn, team) {
-        super(id, name, age, skillSet, placeBorn);
-        this.canThrowBall = canThrowBall;
-        this.canDodgeBall = canDodgeBall;
-        this.hasPaid = hasPaid;
-        this.isHealthy = isHealthy;
-        this.yearsExperience = yearsExperience;
-        this.team = team;
-    }
+  constructor(canThrowBall, canDodgeBall, hasPaid, isHealthy, yearsExperience, id, name, age, skillSet, placeBorn, team) {
+      super(id, name, age, skillSet, placeBorn);
+      this.canThrowBall = canThrowBall;
+      this.canDodgeBall = canDodgeBall;
+      this.hasPaid = hasPaid;
+      this.isHealthy = isHealthy;
+      this.yearsExperience = yearsExperience;
+      this.team = team;
   }
+}
 
 //Function that lists all people
 const listPeopleChoices = () => {
-  const listElement = document.getElementById('people')
+  const listElement = document.getElementById('people');
+  let playerIDArr = [];
   //maps through people array to create new possible players
-  arrOfPeople.map(person => {
+  if(listOfPlayers.length < 1){
+    listElement.innerHTML = "";
+    arrOfPeople.map(person => {
       const li = document.createElement("li")
       li.id = person.id;
       const button = document.createElement("button")
@@ -96,8 +134,31 @@ const listPeopleChoices = () => {
       li.appendChild(button)
       li.appendChild(document.createTextNode(person.name + " - " + person.skillSet))
       listElement.append(li);
-  });
-  document.getElementById('listButton').style.display = 'none';
+    });
+  } 
+  else{
+    listElement.innerHTML = "";
+    listOfPlayers.map(player => {
+      for(x in player){
+        if(x === "id"){
+          playerIDArr.push(parseInt(player.id));
+        }
+      }
+    });
+    arrOfPeople.map(person => {
+      if (!playerIDArr.includes(person.id)){
+        const li = document.createElement("li")
+        li.id = person.id;
+        const button = document.createElement("button")
+        button.innerHTML = "Make Player"
+        button.addEventListener('click', function() {makePlayer(person.id)} )
+        li.appendChild(button)
+        li.appendChild(document.createTextNode(person.name + " - " + person.skillSet))
+        listElement.append(li);
+      }
+    });
+  }
+  // document.getElementById('listButton').style.display = 'none';
 }
 
 //function called when "make player" button is clicked
@@ -215,7 +276,7 @@ const addRedTeamMem = (id) => {
       //does not display item in Dodgeball player list
       element.style.display = 'none';
       //creates new Dodgeball Player using DodgeballPlayer class
-      let rtm = new DodgeballPlayer(null, null, null, null, null, `${player.id}`, `${player.name}`, `${player.age}`, `${player.skillSet}`, `${player.placeBorn}`, 'blue');
+      let rtm = new DodgeballPlayer(null, null, null, null, null, `${player.id}`, `${player.name}`, `${player.age}`, `${player.skillSet}`, `${player.placeBorn}`, 'red');
       //new red team memeber pushed to array
       redTeam.push(rtm);
       //assigns player a team
@@ -269,30 +330,4 @@ const addRedTeamMem = (id) => {
   })
 }
 
-if (typeof describe === 'function') {
-  describe('list of players array', () => {
-      it('should add players to list of players array', () => {
-      makePlayer(2);
-      assert.equal(listOfPlayers.length, 1);
-      });
-  // describe('reverse test', () => {
-  //     it('should reverse the array', () => {
-  //     assert.deepEqual(reversed, [ 7, 6, 5, 4, 3, 2, 1 ]);
-  //     });
-  // });
-  // describe('without test', () => {
-  //     it('should remove specified items from the array', () => {
-  //     assert.deepEqual(without, [ 7, 6, 5, 4 ]);
-  //     });
-  // });
-  // describe('shuffle test', () => {
-  //     it('should shuffle the items in the array', () => {
-  //     assert.deepEqual(!shuffled, !a);
-  //     });
-  // });
-  // describe('indexOf test', () => {
-  //     it('should find the index of a specfic value', () => {
-  //     assert.deepEqual(indexOf, 3);
-  //     });
-  // });
-})};
+
